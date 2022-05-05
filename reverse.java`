@@ -1,0 +1,47 @@
+/******************************************************************************
+Given a signed 32-bit integer x, return x with its digits reversed. If reversing x causes the value to go outside the signed 32-bit integer range [-231, 231 - 1], then return 0.
+
+Assume the environment does not allow you to store 64-bit integers (signed or unsigned).
+
+https://leetcode.com/problems/reverse-integer/
+
+*******************************************************************************/
+
+public class Main
+{
+	public static void main(String[] args) {
+		System.out.println(reverse(1534236469));
+	}
+	
+	public static int reverse(int x) {
+	    long num = x;
+	    long negativeLimit = -2147483648;
+	    long positiveLimit = 2147483647;
+        if(num<=negativeLimit || num>=positiveLimit){
+            return 0;
+        }
+        boolean isPositive = true;
+        if(num<0){
+            isPositive = false;
+            num=num*(-1);
+        }
+        int length = String.valueOf(num).length();
+        long answer = 0;
+        for(int i=0;i<length;i++){
+            if(isPositive==true && answer*10>positiveLimit){
+                return 0;
+            } else if(isPositive==false && (1)*answer<negativeLimit){
+                return 0;
+            }
+            answer=answer*10+num%10;
+            num=num/10;
+        }
+        if(isPositive==false){
+            answer=answer*(-1);
+        }
+        if(answer<-2147483648 || answer>2147483647){
+            return 0;
+        }
+        return (int)answer;
+    }
+}
